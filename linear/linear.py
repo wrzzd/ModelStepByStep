@@ -15,4 +15,16 @@ class Linear(Module):
           bias: bool, default: True
     """
     def __init__(self, *args, **kwargs):
-        super(
+        super().__init__()
+        self.weight = np.array((kwargs[input_dim], kwargs[output_dim]))
+        if kwargs[bias]:
+            self.b = np.array(kwargs[output_dim])
+        else:
+            self.b = np.zero(kwargs[output_dim])
+
+    def forward(self, x):
+        y = x.matmul(self.weight.t())
+        y += self.b
+
+        return y
+
